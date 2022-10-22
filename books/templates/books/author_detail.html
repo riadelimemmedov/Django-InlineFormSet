@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %} Author Detail {% endblock title %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                <strong>{{message}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <h3>Author Book Details</h3>
+    <div class="d-flex d-flex-inline"><span class="pe-2">Authors name :&nbsp;</span><h5 class="text-muted">{{author.name|title}}</h5></div>
+    <hr>
+    {% for book in author.authorbook.all %}
+        <div class="shadow border rounded p-4">
+            <div class="small">Id : {{book.id}}</div>
+            <div>Title : {{book.title}}</div>
+        </div>
+        <hr>
+    {% endfor %}
+    <p>
+        <a href="{% url 'books:author_edit_book' author.pk %}" role="button" sclass="btn btn-primary w-100 mb-2">Edit Authors Books</a>
+        <a href="{% url 'books:authors' %}" role="button" class="btn btn-secondary w-100">All Authors</a>
+    </p>
+
+{% endblock content %}

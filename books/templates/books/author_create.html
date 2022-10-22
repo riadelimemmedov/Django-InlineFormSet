@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %} Auhor Create {% endblock title %}
+
+{% block content %}
+    <form action="{% url 'books:author_create' %}" method="POST">
+        {% for hidden_field in form.hidden_fields %}<!-- !This example does not handle any errors in the hidden fields. Usually, an error in a hidden field is a sign of form tampering, since normal form interaction won’t alter them.  -->
+            {{hidden_field.errors}}
+            {{hidden_field}}
+        {% endfor %}
+
+        {% csrf_token %}
+
+        {{form.non_form_errors}}<!-- !Non-form errors will be rendered with an additional class of nonform to help distinguish them from form-specific errors. -->
+
+
+        <!-- {{form}} => return all columns in table,stored one list -->
+
+        {% for field in form %}<!-- iterate at form column each row an show html -->
+            <!-- {{field.name}}  => return form_fields_name -->
+            {{field.errors}}
+            {{field.label_tag}} &nbsp; {{field}}
+        {% endfor %}
+
+        <p class="pt-2">
+            <button type="submit" class="btn btn-warning w-100 mb-3 border rounded shadow-sm">Add An Author</button>
+            <a href="{% url 'books:home' %}" role="button" class="btn btn-danger w-100 border rounded shadow-sm">Cancel</a>
+        </p>
+
+    </form>
+{% endblock content %}
